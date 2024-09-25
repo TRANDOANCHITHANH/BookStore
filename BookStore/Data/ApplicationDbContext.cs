@@ -10,12 +10,12 @@ namespace BookStore.Data
             : base(options)
         {
         }
-        public DbSet<ChiTietDonHang> DbSetChiTietDonHang { get; set; }
-        public DbSet<ChiTietGioHang> DbSetChiTietGioHang { get; set; }
-        public DbSet<DonHang> DbSetDonHang { get; set; }
-        public DbSet<GioHang> DbSetGioHang { get; set; }
-        public DbSet<Sach> DbSetSach { get; set; }
-        public DbSet<TheLoai> DbSetTheLoai { get; set; }
-        public DbSet<TrangThaiDonHang> DbSetTrangThaiDonHang { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartDetail> CartDetails { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
     }
 }
