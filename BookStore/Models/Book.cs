@@ -17,6 +17,7 @@ namespace BookStore.Models
     [Required]
     public double Price { get; set; }
     public string? Image { get; set; }
+    public string? Description { get; set; }
     [Required]
     public int GenreId { get; set; }
     public Genre Genre { get; set; }

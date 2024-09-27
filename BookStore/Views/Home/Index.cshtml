@@ -1,11 +1,12 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+@* <div class="text-center mt-2">
+    <h1 class="display-4 fw-bold">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+</div> *@
 <div class="my-2">
     <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
   <div class="col-12">
@@ -38,20 +39,26 @@
   </div> *@
 
   <div class="col-12">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Search</button>
   </div>
 </form>
 </div>
 <div class="w-100 mt-4 mb-5 d-flex flex-wrap justify-content-center">
 @for(int i = 0; i <= 8; i++)
 {
-
-        <div class="card" style="width: 16rem;">
-            <img src="..." class="card-img-top" alt="...">
+        <div class="card mx-2 mb-4" style="width: 16rem;">
+            <img src="https://book365-bd0597d52b2112b2088efaaa03918d68.s3.ap-southeast-1.amazonaws.com/disk/d99/d9912de9d6a7fba9244af109454bef65/6f2f178140cc0077b5aa7689ddbe1acd" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">Card title</h5>
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <p class="card-text">
+                    Tác giả:
+                </p> 
+                <p class="card-text">
+                    Giá: 
+                </p>
+                
+                <a href="#" class="btn btn-primary">Add to cart</a>
             </div>
         </div>
 
