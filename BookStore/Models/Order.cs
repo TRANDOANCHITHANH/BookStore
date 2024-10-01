@@ -14,7 +14,25 @@ namespace BookStore.Models
     [Required]
     public int OrderStatusId { get; set; }
     public bool IsDeleted { get; set; } = false;
-    public OrderStatus OrderStatus { get; set; }
-    public List<OrderDetail> OrderDetail { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string? Name { get; set; }
+        [Required]
+        [EmailAddress]
+        [MaxLength(255)]
+        public string? Email {  get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string? MobileNumber { get; set; }
+        [Required]
+        [MaxLength(200)]
+        public string? Address { get; set; }
+        public bool IsPaid { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string? PaymentMethod { get; set; }
+
+        public OrderStatus OrderStatus { get; set; }
+        public List<OrderDetail> OrderDetail { get; set; }
   }
 }

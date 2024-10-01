@@ -1,4 +1,6 @@
 using BookStore.Models;
+using BookStore.Models.DTOs;
+using BookStore.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,15 +9,26 @@ namespace BookStore.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IHomeRepository _homeRepository;
+        public HomeController(ILogger<HomeController> logger,IHomeRepository homeRepository)
         {
             _logger = logger;
+            _homeRepository = homeRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string keySearch = "", int theLoaiId = 0)
         {
-            return View();
+            IEnumerable<Book> books = await _homeRepository.GetBooks(keySearch, theLoaiId);
+            IEnumerable<Genre> genres = await _homeRepository.Genres();
+            BookDisplayModel bookDislayModel = new BookDisplayModel
+            {
+                Books = books,
+                Genres = genres,
+                KeySearch = keySearch,
+                TheLoaiId = theLoaiId
+            };
+
+            return View(bookDislayModel);
         }
 
         public IActionResult Privacy()

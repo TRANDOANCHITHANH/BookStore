@@ -23,7 +23,12 @@ namespace BookStore.Models
     public Genre Genre { get; set; }
     public List<OrderDetail> OrderDetail { get; set; }
     public List<CartDetail> CartDetail { get; set; }
+    public Stock Stock { get; set; }
+        // khong ánh xạ trường dữ liệu GenreName trong bảng Genre
     [NotMapped]
     public string GenreName { get; set; }
+		// khong ánh xạ trường dữ liệu Quantity trong bảng Stock
+		[NotMapped]
+        public string Quantity { get; set; }
   }
 }

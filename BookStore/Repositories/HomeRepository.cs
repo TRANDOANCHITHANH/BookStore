@@ -1,7 +1,6 @@
 ﻿using BookStore.Data;
 using BookStore.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Drawing;
 
 namespace BookStore.Repositories
 {
@@ -12,47 +11,36 @@ namespace BookStore.Repositories
         {
             _dbContext = dbContext;
         }
-        public void GetBooks(string keySearch = "",int theLoaiId = 0)
-        {
-            //sang dang thuong
-            keySearch = keySearch.ToLower();
-            var sachs = (from sach in _dbContext.Books
-                         join theLoai in _dbContext.Genres
-                         on sach.GenreId equals theLoai.Id
-                         select new Book
-                         {
-                             Id = sach.Id,
-                             Image = sach.Image,
-                             AuthorName = sach.AuthorName,
-                             Description = sach.Description,
-                             Price = sach.Price,
-                             GenreId = sach.GenreId,
-                             GenreName = sach.GenreName,    
-                         }
-                         );
-            
-        }
-        public async Task<IEnumerable<Book>>GetInfBook(string keySearch="",int theLoaiId = 0)
-        {
-            //sang dang thuong
-            keySearch = keySearch.ToLower();
-            IEnumerable<Book> sachs = await (from sach in _dbContext.Books
-                         join theLoai in _dbContext.Genres
-                         on sach.GenreId equals theLoai.Id
-                         where string.IsNullOrWhiteSpace(keySearch)  
-                         || (sach != null && sach.BookName.ToLower().StartsWith(keySearch))
-                         select new Book
-                         {
-                             Id = sach.Id,
-                             Image = sach.Image,
-                             AuthorName = sach.AuthorName,
-                             Description = sach.Description,
-                             Price = sach.Price,
-                             GenreId = sach.GenreId,
-                             GenreName = sach.GenreName,
-                         }
-                         ).ToListAsync();
-            return sachs;
-        }
-    }
+		public async Task<IEnumerable<Genre>> Genres()
+		{
+			return await _dbContext.Genres.ToListAsync();
+		}
+		public async Task<IEnumerable<Book>> GetBooks(string keySearch = "", int genreId = 0)
+		{
+			// chuyển đổi chuỗi sang dạng chữ thường
+			keySearch = keySearch.ToLower();
+
+			IEnumerable<Book> books =
+			  await (from book in _dbContext.Books
+					 join genre in _dbContext.Genres
+					 on book.GenreId equals genre.Id
+					 where string.IsNullOrWhiteSpace(keySearch) || (book != null && book.BookName != null && book.BookName.ToLower().StartsWith(keySearch.ToLower()))
+					 select new Book
+					 {
+						 Id = book.Id,
+						 //Image = book.Image,
+						 AuthorName = book.AuthorName,
+						 BookName = book.BookName,
+						 GenreId = book.GenreId,
+						 Price = book.Price,
+						 //GenreName = genre.GenreName
+					 }
+					 ).ToListAsync();
+			if (genreId > 0)
+			{
+				books = books.Where(i => i.GenreId == genreId).ToList();
+			}
+			return books;
+		}
+	}
 }
