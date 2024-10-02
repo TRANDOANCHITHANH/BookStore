@@ -29,6 +29,6 @@ namespace BookStore.Models
     public string GenreName { get; set; }
 		// khong ánh xạ trường dữ liệu Quantity trong bảng Stock
 		[NotMapped]
-        public string Quantity { get; set; }
+        public int Quantity { get; set; }
   }
 }

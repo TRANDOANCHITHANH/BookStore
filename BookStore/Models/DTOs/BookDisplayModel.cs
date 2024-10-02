@@ -6,6 +6,6 @@ namespace BookStore.Models.DTOs
         public IEnumerable<Book> Books { get; set; }
         public IEnumerable<Genre> Genres { get; set; }
         public string KeySearch { get; set; } = "";
-        public int TheLoaiId { get; set; } = 0;
+        public int GenreId { get; set; } = 0;
     }
 }

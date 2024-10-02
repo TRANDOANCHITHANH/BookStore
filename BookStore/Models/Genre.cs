@@ -10,7 +10,7 @@ namespace BookStore.Models
     public int Id { get; set; }
     [Required]
     [MaxLength(50)]
-    public string GenreName { get; set; }
+    public string? GenreName { get; set; }
     public List<Book> Books { get; set; }
   }
 }

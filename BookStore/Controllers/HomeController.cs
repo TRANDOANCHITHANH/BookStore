@@ -10,7 +10,8 @@ namespace BookStore.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IHomeRepository _homeRepository;
-        public HomeController(ILogger<HomeController> logger,IHomeRepository homeRepository)
+
+        public HomeController(ILogger<HomeController> logger, IHomeRepository homeRepository)
         {
             _logger = logger;
             _homeRepository = homeRepository;

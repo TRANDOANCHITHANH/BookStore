@@ -1,66 +1,79 @@
-﻿
-@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@using BookStore.Models.DTOs
+@model BookDisplayModel
 
-@* <div class="text-center mt-2">
-    <h1 class="display-4 fw-bold">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div> *@
+<div class="text-center">
+    <h1 class="display-4">Chào mừng anh em đến với channel Coding With Thinh</h1>
+</div>
+
 <div class="my-2">
     <form asp-action="Index" class="row row-cols-lg-auto g-3 align-items-center">
-  <div class="col-12">
-    <label class="visually-hidden" for="inlineFormInputGroupUsername">Username</label>
-    <div class="input-group">
-      @* <div class="input-group-text"> </div> *@
-      <input type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Username">
-    </div>
-  </div>
-
-  <div class="col-12">
-    <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-    <select class="form-select" id="inlineFormSelectPref">
-      <option selected>Thể loại...</option>
-      <option value="1">Lịch sử</option>
-      <option value="2">Kinh dị</option>
-      <option value="3">Bí ẩn</option>
-      <option value="4">Truyện ngắn</option>
-      <option value="5">Khoa học viễn tưỡng</option>
-    </select>
-  </div>
-
-@*   <div class="col-12">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="inlineFormCheck">
-      <label class="form-check-label" for="inlineFormCheck">
-        Remember me
-      </label>
-    </div>
-  </div> *@
-
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Search</button>
-  </div>
-</form>
-</div>
-<div class="w-100 mt-4 mb-5 d-flex flex-wrap justify-content-center">
-@for(int i = 0; i <= 8; i++)
-{
-        <div class="card mx-2 mb-4" style="width: 16rem;">
-            <img src="https://book365-bd0597d52b2112b2088efaaa03918d68.s3.ap-southeast-1.amazonaws.com/disk/d99/d9912de9d6a7fba9244af109454bef65/6f2f178140cc0077b5aa7689ddbe1acd" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <p class="card-text">
-                    Tác giả:
-                </p> 
-                <p class="card-text">
-                    Giá: 
-                </p>
-                
-                <a href="#" class="btn btn-primary">Add to cart</a>
+        <div class="col-12">
+            <label class="visually-hidden" for="theloaiID">
+                Search
+            </label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="theloaiID" name="theloaiID" placeholder="Search" />
             </div>
         </div>
 
-}
+        <div class="col-12">
+            <label class="visually-hidden" for="">
+                Thể loại
+            </label>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Thể loại ...</option>
+                <option value="1">Fantasy</option>
+                @foreach (var genre in Model.Genres)
+                {
+                    <option selected="@(genre.Id == Model.GenreId)" value="@genre.Id">@genre.GenreName</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">
+                Search
+            </button>
+            <a href="/Home/Index" class="btn btn-dark">Trở lại trang home</a>
+        </div>
+    </form>
+</div>
+
+<div class="w-100 mt-4 mb-5 d-flex flex-wrap justify-content-center">
+
+    @foreach (var book in Model.Books)
+    {
+        <div class="card mx-2 mb-4" style="width: 16rem;">
+
+            @if (string.IsNullOrEmpty(book.Image))
+            {
+                <img style="width:100%;height:200px" src="https://m.media-amazon.com/images/I/91147XjTc1L._SL1500_.jpg" class="card-img-top" alt="doctor-who" />
+            }
+            else
+            {
+                <img style="width:100%;height:200px" src="/img/@book.Image" class="card-img-top" alt="doctor-who" />
+            }
+
+            <div class="card-body">
+                <h5 class="card-title">@book.BookName</h5>
+                <p class="card-text">
+                    @* <b>Thể loại: </b>@book.GenreName <br /> *@
+                    <b>Tác giả: </b>@book.AuthorName <br />
+                    <b>Giá: </b>@book.Price <br />
+                </p>
+                @* @if (book.Quantity > 0)
+            {
+            <button type="button"
+            onclick="add(@book.Id)"
+            class="btn btn-primary">
+            Thêm vào giỏ hàng
+            </button>
+            }
+            else
+            {
+            <span style="border: 1px solid; padding: 6px 8px; color: orange; border-radius: 6px">Không còn hàng</span>
+            } *@
+            </div>
+        </div>
+    }
 </div>
