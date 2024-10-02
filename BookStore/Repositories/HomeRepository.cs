@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.Repositories
 {
-    public class HomeRepository
+    public class HomeRepository : IHomeRepository
     {
         private readonly ApplicationDbContext _dbContext;
         public HomeRepository(ApplicationDbContext dbContext)

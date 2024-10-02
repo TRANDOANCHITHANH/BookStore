@@ -33,21 +33,21 @@ namespace BookStore.Repositories
                 var cart = await GetCart(userId);
                 if (cart is null)
                 {
-                    throw new InvalidOperationException("lỗi, giỏ hàng trống");
+                    throw new InvalidOperationException("Lỗi, giỏ hàng trống");
                 }
 
                 var chitietgiohang = _dbContext.CartDetails
                   .Where(i => i.CartId == cart.Id).ToList();
                 if (chitietgiohang.Count == 0)
                 {
-                    throw new InvalidOperationException("giỏ hàng trống");
+                    throw new InvalidOperationException("Giỏ hàng trống");
                 }
 
                 var trangthaidonhang = _dbContext.OrderStatuses
                   .FirstOrDefault(s => s.StatusName == "Pending");
                 if (trangthaidonhang is null)
                 {
-                    throw new InvalidOperationException("đơn hàng đang chờ xử lý");
+                    throw new InvalidOperationException("Đơn hàng đang chờ xử lý");
                 }
 
                 var order = new Order
@@ -96,17 +96,18 @@ namespace BookStore.Repositories
 
         public async Task<int> GetCartItemCount(string userId = "")
         {
+            // cập nhật
             if (string.IsNullOrEmpty(userId))
             {
                 userId = GetUserId();
             }
             var data = await (
-                from cart in _dbContext.Carts
-                join cartDetail in _dbContext.CartDetails
-                on cart.Id equals cartDetail.CartId
-                where cart.UserId == userId // cập nhật
-                select new { cartDetail.Id }
-                ).ToListAsync();
+              from cart in _dbContext.Carts
+              join cartDetail in _dbContext.CartDetails
+              on cart.Id equals cartDetail.CartId
+              where cart.UserId == userId // cập nhật
+              select new { cartDetail.Id }
+              ).ToListAsync();
             return data.Count();
         }
 
@@ -115,7 +116,7 @@ namespace BookStore.Repositories
              var userId = GetUserId();
             if(userId == null)
             {
-                throw new InvalidOperationException("khong the tim thay id");
+                throw new InvalidOperationException("Khong the tim thay id");
             }
             var shoppingCart = await _dbContext.Carts
             .Include(cart => cart.CartDetails)
@@ -138,13 +139,13 @@ namespace BookStore.Repositories
             {
                 if (string.IsNullOrEmpty(userId))
                 {
-                    throw new UnauthorizedAccessException("bạn chưa đăng nhập");
+                    throw new UnauthorizedAccessException("Bạn chưa đăng nhập");
                 }
 
                 var cart = await GetCart(userId);
                 if (cart is null)
                 {
-                    throw new UnauthorizedAccessException("giỏ hàng trống");
+                    throw new UnauthorizedAccessException("Giỏ hàng trống");
                 }
 
                 var cartItem = _dbContext.CartDetails
@@ -168,7 +169,7 @@ namespace BookStore.Repositories
             catch (Exception ex)
             {
                 // đối với các lỗi không mong muốn, ném nó vào đây
-                throw new UnauthorizedAccessException("lỗi, vui lòng chạy lại");
+                throw new UnauthorizedAccessException("Lỗi, vui lòng chạy lại");
             }
 
             var cartItemCount = await GetCartItemCount(userId);
@@ -181,6 +182,7 @@ namespace BookStore.Repositories
             var nhandiennguoidung = _contextAccessor.HttpContext.User;
             string userId = _userManager.GetUserId(nhandiennguoidung);
             return userId;
+
         }
     }
 }

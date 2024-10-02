@@ -1,4 +1,5 @@
 using BookStore.Data;
+using BookStore.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,10 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
 	.AddDefaultUI()
 	.AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
-
+// add m?t cái service t?m th?i (transient)
+builder.Services.AddTransient<IHomeRepository, HomeRepository>();
+builder.Services.AddTransient<IBookRepository, BookRepository>();
+builder.Services.AddTransient<ICartRepository, CartRepository>();
 var app = builder.Build();
 
 /*using (var scope = app.Services.CreateScope())
